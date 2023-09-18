@@ -36,6 +36,7 @@ class _HomePageState extends State<HomePage> {
             'BMI Calculator',
             style: TextStyle(color: Colors.black),
           ),
+          backgroundColor: Color.fromARGB(255, 255, 174, 0),
         ),
         body: SafeArea(
           child: Container(
