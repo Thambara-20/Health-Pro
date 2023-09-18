@@ -50,8 +50,7 @@ class _MainPageState extends State<MainPage> {
                                 },
                                 onExit: (event) {
                                   setState(() {
-                                  isMaleClicked = false;
-                                    
+                                    isMaleClicked = false;
                                   });
                                 },
                                 child: Container(
@@ -127,147 +126,182 @@ class _MainPageState extends State<MainPage> {
                     ),
                   ),
                   const SizedBox(height: 20),
-                  Row(
-                    children: [
-                      Column(
-                        children: [
-                          Container(
-                              decoration: BoxDecoration(
-                                  color: Color.fromARGB(255, 0, 208, 255),
-                                  borderRadius: BorderRadius.circular(10),
-                                  border: Border.all(
-                                    color:
-                                        kborderColor, // Set the border color here
-                                    width: 2.0,
-                                  )),
-                              margin: const EdgeInsets.only(top: 20, left: 20),
-                              child: Padding(
-                                padding: const EdgeInsets.all(12.0),
-                                child: Column(children: [
-                                  const Text(
-                                    'Height',
-                                    style: TextStyle(
-                                      fontSize: 20,
-                                      fontWeight: FontWeight.bold,
-                                    ),
-                                  ),
-                                  Text('${height}', style: kHeightStyle),
-                                  Row(
-                                    children: [
-                                      FloatingActionButton(
-                                          hoverColor: Colors.red,
-                                          onPressed: () {
-                                            setState(() {
-                                              height++;
-                                              bmi = calculateBMI(
-                                                  height: height,
-                                                  weight: weight);
-                                            });
-                                          },
-                                          backgroundColor: kbuttonColor,
-                                          child: Icon(Icons.add, size: 30)),
-                                      const SizedBox(width: 10),
-                                      FloatingActionButton(
-                                        onPressed: () {
-                                          setState(() {
-                                            if (height > 100) height--;
-                                            bmi = calculateBMI(
-                                                height: height, weight: weight);
-                                          });
-                                        },
-                                        backgroundColor: kbuttonColor,
-                                        child:
-                                            const Icon(Icons.remove, size: 30),
-                                      )
-                                    ],
-                                  )
-                                ]),
-                              )),
-                        ],
-                      ),
-                      const Spacer(),
-                      Column(
-                        mainAxisAlignment:
-                            MainAxisAlignment.center, // Center horizontally
-                        crossAxisAlignment: CrossAxisAlignment.center,
-                        children: [
-                          Container(
-                            decoration: BoxDecoration(
-                                color: const Color.fromARGB(255, 255, 143, 69),
-                                borderRadius: BorderRadius.circular(10),
-                                border: Border.all(
-                                    color: kborderColor, width: 2.0)),
-                            margin: const EdgeInsets.only(
-                                top: 20, left: 20, right: 20),
-                            child: Padding(
-                                padding: const EdgeInsets.all(12.0),
-                                child: Column(
-                                  children: [
-                                    const Text(
-                                      'weight',
-                                      style: TextStyle(
-                                        fontSize: 20,
-                                        fontWeight: FontWeight.bold,
+                  Padding(
+                    padding: const EdgeInsets.all(8.0),
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                  
+                      children: [
+                        Expanded(
+                          flex: 1,
+                          child: Column(
+                            mainAxisAlignment: MainAxisAlignment.center, // Center horizontally
+                            children: [
+                              Container(
+                                  decoration: BoxDecoration(
+                                      color: Color.fromARGB(255, 0, 208, 255),
+                                      borderRadius: BorderRadius.circular(10),
+                                      border: Border.all(
+                                        color:
+                                            kborderColor, // Set the border color here
+                                        width: 2.0,
+                                      )),
+                                  // margin: const EdgeInsets.only(top: 20, left: 10,right: 10),
+                                  child: Padding(
+                                    padding: const EdgeInsets.all(12.0),
+                                    child: Column(children: [
+                                      const Text(
+                                        'Height',
+                                        style: TextStyle(
+                                          fontSize: 20,
+                                          fontWeight: FontWeight.bold,
+                                        ),
                                       ),
-                                    ),
-                                    Text('${weight}', style: kweightStyle),
-                                    Row(
-                                      children: [
-                                        FloatingActionButton(
+                                      Text('${height}', style: kHeightStyle),
+                                      Row(
+                                        mainAxisAlignment: MainAxisAlignment.center,
+                                        children: [
+                                          
+                                          FloatingActionButton(
+                                              hoverColor: Colors.red,
+                                              onPressed: () {
+                                                setState(() {
+                                                  height++;
+                                                  bmi = calculateBMI(
+                                                      height: height,
+                                                      weight: weight);
+                                                });
+                                              },
+                                              backgroundColor: kbuttonColor,
+                                              child: Icon(Icons.add, size: 30)),
+                                          const SizedBox(width: 10),
+                                          FloatingActionButton(
                                             onPressed: () {
                                               setState(() {
-                                                weight++;
+                                                if (height > 100) height--;
                                                 bmi = calculateBMI(
-                                                    height: height,
-                                                    weight: weight);
+                                                    height: height, weight: weight);
                                               });
                                             },
                                             backgroundColor: kbuttonColor,
-                                            child: const Icon(Icons.add,
-                                                size: 30)),
-                                        const SizedBox(width: 10),
-                                        FloatingActionButton(
-                                          onPressed: () {
-                                            setState(() {
-                                              if (weight > 1) weight--;
-                                              bmi = calculateBMI(
-                                                  height: height,
-                                                  weight: weight);
-                                            });
-                                          },
-                                          backgroundColor: kbuttonColor,
-                                          child: const Icon(Icons.remove,
-                                              size: 30),
+                                            child:
+                                                const Icon(Icons.remove, size: 30),
+                                          )
+                                        ],
+                                      )
+                                    ]),
+                                  )),
+                            ],
+                          ),
+                        ),
+                          const SizedBox(width: 10),
+                        Expanded(
+                          flex: 1,
+                          child: Column(
+                           
+                            mainAxisAlignment:
+                                MainAxisAlignment.center, // Center horizontally
+                            crossAxisAlignment: CrossAxisAlignment.center,
+                            children: [
+                              Container(
+                                 width: double.maxFinite/2,
+                                decoration: BoxDecoration(
+                                    color: const Color.fromARGB(255, 255, 143, 69),
+                                    borderRadius: BorderRadius.circular(10),
+                                    border: Border.all(
+                                        color: kborderColor, width: 2.0)),
+                                // margin: const EdgeInsets.only(
+                                //     top: 20, left: 20, right: 20),
+                                child: Padding(
+                                    padding: const EdgeInsets.all(12.0),
+                                    child: Column(
+                                      children: [
+                                        const Text(
+                                          'weight',
+                                          style: TextStyle(
+                                            fontSize: 20,
+                                            fontWeight: FontWeight.bold,
+                                          ),
+                                        ),
+                                        Text('${weight}', style: kweightStyle),
+                                        Row(
+                                          mainAxisAlignment: MainAxisAlignment.center,
+                                          children: [
+                                            FloatingActionButton(
+                                                onPressed: () {
+                                                  setState(() {
+                                                    weight++;
+                                                    bmi = calculateBMI(
+                                                        height: height,
+                                                        weight: weight);
+                                                  });
+                                                },
+                                                backgroundColor: kbuttonColor,
+                                                child: const Icon(Icons.add,
+                                                    size: 30)),
+                                            const SizedBox(width: 10),
+                                            FloatingActionButton(
+                                              onPressed: () {
+                                                setState(() {
+                                                  if (weight > 1) weight--;
+                                                  bmi = calculateBMI(
+                                                      height: height,
+                                                      weight: weight);
+                                                });
+                                              },
+                                              backgroundColor: kbuttonColor,
+                                              child: const Icon(Icons.remove,
+                                                  size: 30),
+                                            )
+                                          ],
                                         )
                                       ],
-                                    )
-                                  ],
-                                )),
+                                    )),
+                              ),
+                            ],
+                          ),
+                        ),
+                      ],
+                    ),
+                  ),
+                  const SizedBox(height: 40),
+                  ClipOval(
+                    child: Container(
+                      decoration: BoxDecoration(
+                        color: Color.fromARGB(255, 0, 0, 0),
+                        shape: BoxShape.circle, // Set the shape to a circle
+                        border: Border.all(
+                          color: kborderColor,
+                          width: 2.0,
+                        ),
+                      ),
+                      margin:
+                          const EdgeInsets.only(top: 20, left: 20, right: 20),
+                      padding: const EdgeInsets.all(
+                          50), // Add padding to control the content size
+                      child: Column(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        crossAxisAlignment: CrossAxisAlignment.center,
+                        children: [
+                          const Text(
+                            'BMI',
+                            style: TextStyle(
+                              fontSize: 20,
+                              color: Color.fromARGB(255, 255, 255, 255),
+                            ),
+                          ),
+                          Text(
+                            '${bmi.toStringAsFixed(2)}',
+                            style: TextStyle(fontSize: 50, color: koutputColor),
+                          ),
+                          Text(
+                            getStatus(bmi),
+                            style: TextStyle(color: Colors.amber, fontSize: 20),
                           ),
                         ],
                       ),
-                    ],
-                  ),
-                  const SizedBox(height: 40),
-                  Column(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    mainAxisSize: MainAxisSize.max,
-                    crossAxisAlignment: CrossAxisAlignment.center,
-                    children: [
-                      const Text(
-                        'BMI',
-                        style: TextStyle(
-                            fontSize: 20,
-                            color: Color.fromARGB(255, 255, 255, 255)),
-                      ),
-                      Text(
-                        '${bmi.toStringAsFixed(2)}',
-                        style: TextStyle(fontSize: 50, color: koutputColor),
-                      ),
-                      Text(getStatus(bmi),
-                          style: TextStyle(color: Colors.amber, fontSize: 20))
-                    ],
-                  ),
+                    ),
+                  )
                 ]),
           ),
         ));
