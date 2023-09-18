@@ -4,14 +4,14 @@ import 'package:bmicalculator/src/ValueFinalOutput.dart';
 import 'package:bmicalculator/src/WeightHeightSelectionWidget.dart';
 import 'package:flutter/material.dart';
 
-class MainPage extends StatefulWidget {
-  const MainPage({super.key});
+class HomePage extends StatefulWidget {
+  const HomePage({super.key});
 
   @override
-  State<MainPage> createState() => _MainPageState();
+  State<HomePage> createState() => _HomePageState();
 }
 
-class _MainPageState extends State<MainPage> {
+class _HomePageState extends State<HomePage> {
   int height = 150;
   int weight = 50;
   bool isFemaleClicked = false;
