@@ -1,3 +1,4 @@
+import 'package:bmicalculator/constants.dart';
 import 'package:flutter/material.dart';
 
 class MainPage extends StatefulWidget {
@@ -8,18 +9,24 @@ class MainPage extends StatefulWidget {
 }
 
 class _MainPageState extends State<MainPage> {
+  int height = 150;
+  int weight = 50;
+
+  late double bmi = calculateBMI(height:height,weight:weight);
+
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
         appBar: AppBar(
-          title: Text(
+          title: const Text(
             'BMI Calculator',
             style: TextStyle(color: Colors.black),
           ),
         ),
         body: SafeArea(
           child: Container(
-            color: Color.fromARGB(255, 0, 0, 0),
+            color: const Color.fromARGB(255, 0, 0, 0),
             child: Column(children: [
               Row(
                 children: [
@@ -29,9 +36,8 @@ class _MainPageState extends State<MainPage> {
                           decoration: BoxDecoration(
                               color: Colors.green[500],
                               borderRadius: BorderRadius.circular(10),
-                              border: Border.all(
-                                  color: Color.fromARGB(255, 255, 255, 255),
-                                  width: 2.0)),
+                              border:
+                                  Border.all(color: kborderColor, width: 2.0)),
                           margin: const EdgeInsets.only(top: 20, left: 20),
                           child: Padding(
                             padding: const EdgeInsets.all(8.0),
@@ -58,9 +64,8 @@ class _MainPageState extends State<MainPage> {
                           decoration: BoxDecoration(
                               color: Colors.yellow[600],
                               borderRadius: BorderRadius.circular(10),
-                              border: Border.all(
-                                  color: Color.fromARGB(255, 255, 255, 255),
-                                  width: 2.0)),
+                              border:
+                                  Border.all(color: kborderColor, width: 2.0)),
                           margin: const EdgeInsets.only(
                               top: 20, left: 20, right: 20),
                           child: Padding(
@@ -83,6 +88,7 @@ class _MainPageState extends State<MainPage> {
                   ),
                 ],
               ),
+              const SizedBox(height: 20),
               Row(
                 children: [
                   Column(
@@ -92,13 +98,13 @@ class _MainPageState extends State<MainPage> {
                               color: Color.fromARGB(255, 0, 208, 255),
                               borderRadius: BorderRadius.circular(10),
                               border: Border.all(
-                                color: Color.fromARGB(255, 255, 255,
-                                    255), // Set the border color here
+                                color:
+                                    kborderColor, // Set the border color here
                                 width: 2.0,
                               )),
                           margin: const EdgeInsets.only(top: 20, left: 20),
                           child: Padding(
-                            padding: const EdgeInsets.all(8.0),
+                            padding: const EdgeInsets.all(12.0),
                             child: Column(children: [
                               const Text(
                                 'Height',
@@ -107,26 +113,29 @@ class _MainPageState extends State<MainPage> {
                                   fontWeight: FontWeight.bold,
                                 ),
                               ),
-                              const Text(
-                                '151',
-                                style: TextStyle(
-                                  fontSize: 60,
-                                  color: Color.fromARGB(255, 11, 66, 148),
-                                  fontWeight: FontWeight.bold,
-                                ),
-                              ),
+                              Text('${height}', style: kHeightStyle),
                               Row(
-                                children: const [
+                                children: [
                                   FloatingActionButton(
-                                      onPressed: null,
-                                      backgroundColor: Colors.black,
+                                      onPressed: () {
+                                        setState(() {
+                                          height++;
+                                          bmi = calculateBMI(height: height, weight: weight);
+                                        });
+                                      },
+                                      backgroundColor: kbuttonColor,
                                       child: Icon(Icons.add, size: 30)),
-                                  const SizedBox( width:10)
-                                ,
+                                  const SizedBox(width: 10),
                                   FloatingActionButton(
-                                    onPressed: null,
-                                    backgroundColor: Colors.black,
-                                    child: Icon(Icons.remove, size: 30),
+                                    onPressed: () {
+                                      setState(() {
+                                        if (height >100)
+                                             height--;
+                                             bmi = calculateBMI(height: height, weight: weight);
+                                      });
+                                    },
+                                    backgroundColor: kbuttonColor,
+                                    child: const Icon(Icons.remove, size: 30),
                                   )
                                 ],
                               )
@@ -139,15 +148,14 @@ class _MainPageState extends State<MainPage> {
                     children: [
                       Container(
                         decoration: BoxDecoration(
-                            color: Color.fromARGB(255, 255, 143, 69),
+                            color: const Color.fromARGB(255, 255, 143, 69),
                             borderRadius: BorderRadius.circular(10),
-                            border: Border.all(
-                                color: Color.fromARGB(255, 255, 255, 255),
-                                width: 2.0)),
+                            border:
+                                Border.all(color: kborderColor, width: 2.0)),
                         margin:
                             const EdgeInsets.only(top: 20, left: 20, right: 20),
                         child: Padding(
-                            padding: const EdgeInsets.all(8.0),
+                            padding: const EdgeInsets.all(12.0),
                             child: Column(
                               children: [
                                 const Text(
@@ -157,29 +165,31 @@ class _MainPageState extends State<MainPage> {
                                     fontWeight: FontWeight.bold,
                                   ),
                                 ),
-                                const Text(
-                                  '11',
-                                  style: TextStyle(
-                                    fontSize: 60,
-                                    color: Color.fromARGB(255, 129, 0, 0),
-                                    fontWeight: FontWeight.bold,
-                                  ),
-                                ),
-                                 Row(
-                                children: const [
-                                  FloatingActionButton(
-                                      onPressed: null,
-                                      backgroundColor: Colors.black,
-                                      child: Icon(Icons.add, size: 30)),
-                                  const SizedBox( width:10)
-                                ,
-                                  FloatingActionButton(
-                                    onPressed: null,
-                                    backgroundColor: Colors.black,
-                                    child: Icon(Icons.remove, size: 30),
-                                  )
-                                ],
-                              )
+                                Text('${weight}', style: kweightStyle),
+                                Row(
+                                  children: [
+                                    FloatingActionButton(
+                                        onPressed: () {
+                                          setState(() {
+                                            weight++;
+                                            bmi = calculateBMI(height: height, weight: weight);
+                                          });
+                                        },
+                                        backgroundColor: kbuttonColor,
+                                        child: const Icon(Icons.add, size: 30)),
+                                    const SizedBox(width: 10),
+                                    FloatingActionButton(
+                                      onPressed: () {
+                                        setState(() {
+                                          if (weight>1) weight--;
+                                          bmi = calculateBMI(height: height, weight: weight);
+                                        });
+                                      },
+                                      backgroundColor: kbuttonColor,
+                                      child: const Icon(Icons.remove, size: 30),
+                                    )
+                                  ],
+                                )
                               ],
                             )),
                       ),
@@ -187,8 +197,30 @@ class _MainPageState extends State<MainPage> {
                   ),
                 ],
               ),
+              const SizedBox(height: 40),
+              Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                mainAxisSize: MainAxisSize.max,
+                crossAxisAlignment: CrossAxisAlignment.center,
+                children:  [
+                  const Text(
+                    'BMI',
+                    style: TextStyle(
+                        fontSize: 20,
+                        color: Color.fromARGB(255, 255, 255, 255)),
+                  ),
+                  Text(
+                    '${bmi.toStringAsFixed(2)}',
+                    style: TextStyle(fontSize: 50, color: koutputColor),
+                  )
+                ],
+              ),
             ]),
           ),
         ));
+  }
+
+  double calculateBMI( { required int  height, required int weight}) {
+    return weight /(height * height)* 10000;
   }
 }
