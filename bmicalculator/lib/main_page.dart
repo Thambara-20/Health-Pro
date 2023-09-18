@@ -1,4 +1,7 @@
 import 'package:bmicalculator/constants.dart';
+import 'package:bmicalculator/src/GenderSelectionWidget.dart';
+import 'package:bmicalculator/src/ValueFinalOutput.dart';
+import 'package:bmicalculator/src/WeightHeightSelectionWidget.dart';
 import 'package:flutter/material.dart';
 
 class MainPage extends StatefulWidget {
@@ -13,7 +16,17 @@ class _MainPageState extends State<MainPage> {
   int weight = 50;
   bool isFemaleClicked = false;
   bool isMaleClicked = false;
-  late double bmi = calculateBMI(height: height, weight: weight);
+  double bmi = 0.0;
+
+  void calculateBMI() {
+    // Implement your BMI calculation logic here
+    // You can use height and weight to calculate BMI
+    // Update the bmi variable with the calculated value
+    setState(() {
+      // Example calculation
+      bmi = (weight / ((height / 100) * (height / 100)));
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -38,89 +51,27 @@ class _MainPageState extends State<MainPage> {
                           MainAxisAlignment.center, // Center horizontally
                       crossAxisAlignment: CrossAxisAlignment.center,
                       children: [
-                        Expanded(
-                          flex: 1,
-                          child: Column(
-                            children: [
-                              MouseRegion(
-                                onEnter: (_) {
-                                  setState(() {
-                                    isMaleClicked = true;
-                                  });
-                                },
-                                onExit: (event) {
-                                  setState(() {
-                                    isMaleClicked = false;
-                                  });
-                                },
-                                child: Container(
-                                    width: double.maxFinite,
-                                    decoration: BoxDecoration(
-                                        color: isMaleClicked
-                                            ? Colors.green[500]
-                                            : Colors.yellow[600],
-                                        borderRadius: BorderRadius.circular(10),
-                                        border: Border.all(
-                                            color: kborderColor, width: 2.0)),
-                                    child: Padding(
-                                      padding: const EdgeInsets.all(8.0),
-                                      child: Column(children: const [
-                                        Text(
-                                          'Male',
-                                          style: TextStyle(
-                                            fontSize: 20,
-                                            fontWeight: FontWeight.bold,
-                                          ),
-                                        ),
-                                        Icon(
-                                          Icons.male,
-                                          size: 100,
-                                        ),
-                                      ]),
-                                    )),
-                              ),
-                            ],
-                          ),
+                        GenderSelectionWidget(
+                          isSelected: isMaleClicked,
+                          onTap: () {
+                            setState(() {
+                              isMaleClicked = !isMaleClicked;
+                            });
+                          },
+                          icon: Icons.male,
+                          label: 'Male',
                         ),
                         const SizedBox(width: 10),
-                        Expanded(
-                          flex: 1,
-                          child: Column(
-                            children: [
-                              GestureDetector(
-                                onTap: () {
-                                  setState(() {
-                                    isFemaleClicked = !isFemaleClicked;
-                                  });
-                                },
-                                child: Container(
-                                    width: double.maxFinite,
-                                    decoration: BoxDecoration(
-                                        color: isFemaleClicked
-                                            ? Colors.green[600]
-                                            : Colors.yellow[600],
-                                        borderRadius: BorderRadius.circular(10),
-                                        border: Border.all(
-                                            color: kborderColor, width: 2.0)),
-                                    child: Padding(
-                                      padding: const EdgeInsets.all(8.0),
-                                      child: Column(children: const [
-                                        Text(
-                                          'Female',
-                                          style: TextStyle(
-                                            fontSize: 20,
-                                            fontWeight: FontWeight.bold,
-                                          ),
-                                        ),
-                                        Icon(
-                                          Icons.female,
-                                          size: 100,
-                                        )
-                                      ]),
-                                    )),
-                              ),
-                            ],
-                          ),
+                        GenderSelectionWidget(
+                          isSelected: isFemaleClicked,
+                          onTap: () {
+                            setState(() {
+                              print('hello');
+                              isFemaleClicked = !isFemaleClicked;
+                            });
+                          },
+                          icon: Icons.female,
+                          label: 'Female',
                         ),
                       ],
                     ),
@@ -130,185 +81,41 @@ class _MainPageState extends State<MainPage> {
                     padding: const EdgeInsets.all(8.0),
                     child: Row(
                       mainAxisAlignment: MainAxisAlignment.center,
-                  
                       children: [
-                        Expanded(
-                          flex: 1,
-                          child: Column(
-                            mainAxisAlignment: MainAxisAlignment.center, // Center horizontally
-                            children: [
-                              Container(
-                                  decoration: BoxDecoration(
-                                      color: Color.fromARGB(255, 0, 208, 255),
-                                      borderRadius: BorderRadius.circular(10),
-                                      border: Border.all(
-                                        color:
-                                            kborderColor, // Set the border color here
-                                        width: 2.0,
-                                      )),
-                                  // margin: const EdgeInsets.only(top: 20, left: 10,right: 10),
-                                  child: Padding(
-                                    padding: const EdgeInsets.all(12.0),
-                                    child: Column(children: [
-                                      const Text(
-                                        'Height',
-                                        style: TextStyle(
-                                          fontSize: 20,
-                                          fontWeight: FontWeight.bold,
-                                        ),
-                                      ),
-                                      Text('${height}', style: kHeightStyle),
-                                      Row(
-                                        mainAxisAlignment: MainAxisAlignment.center,
-                                        children: [
-                                          
-                                          FloatingActionButton(
-                                              hoverColor: Colors.red,
-                                              onPressed: () {
-                                                setState(() {
-                                                  height++;
-                                                  bmi = calculateBMI(
-                                                      height: height,
-                                                      weight: weight);
-                                                });
-                                              },
-                                              backgroundColor: kbuttonColor,
-                                              child: Icon(Icons.add, size: 30)),
-                                          const SizedBox(width: 10),
-                                          FloatingActionButton(
-                                            onPressed: () {
-                                              setState(() {
-                                                if (height > 100) height--;
-                                                bmi = calculateBMI(
-                                                    height: height, weight: weight);
-                                              });
-                                            },
-                                            backgroundColor: kbuttonColor,
-                                            child:
-                                                const Icon(Icons.remove, size: 30),
-                                          )
-                                        ],
-                                      )
-                                    ]),
-                                  )),
-                            ],
-                          ),
+                        WeightHeightSelectionWidget(
+                          label: 'Height',
+                          height: height,
+                          weight: weight,
+                          onHeightChanged: (newHeight) {
+                            setState(() {
+                              height = newHeight;
+                              calculateBMI(); // Recalculate BMI when height changes
+                            });
+                          },
+                          onWeightChanged: (newWeight) {},
                         ),
-                          const SizedBox(width: 10),
-                        Expanded(
-                          flex: 1,
-                          child: Column(
-                           
-                            mainAxisAlignment:
-                                MainAxisAlignment.center, // Center horizontally
-                            crossAxisAlignment: CrossAxisAlignment.center,
-                            children: [
-                              Container(
-                                 width: double.maxFinite/2,
-                                decoration: BoxDecoration(
-                                    color: const Color.fromARGB(255, 255, 143, 69),
-                                    borderRadius: BorderRadius.circular(10),
-                                    border: Border.all(
-                                        color: kborderColor, width: 2.0)),
-                                // margin: const EdgeInsets.only(
-                                //     top: 20, left: 20, right: 20),
-                                child: Padding(
-                                    padding: const EdgeInsets.all(12.0),
-                                    child: Column(
-                                      children: [
-                                        const Text(
-                                          'weight',
-                                          style: TextStyle(
-                                            fontSize: 20,
-                                            fontWeight: FontWeight.bold,
-                                          ),
-                                        ),
-                                        Text('${weight}', style: kweightStyle),
-                                        Row(
-                                          mainAxisAlignment: MainAxisAlignment.center,
-                                          children: [
-                                            FloatingActionButton(
-                                                onPressed: () {
-                                                  setState(() {
-                                                    weight++;
-                                                    bmi = calculateBMI(
-                                                        height: height,
-                                                        weight: weight);
-                                                  });
-                                                },
-                                                backgroundColor: kbuttonColor,
-                                                child: const Icon(Icons.add,
-                                                    size: 30)),
-                                            const SizedBox(width: 10),
-                                            FloatingActionButton(
-                                              onPressed: () {
-                                                setState(() {
-                                                  if (weight > 1) weight--;
-                                                  bmi = calculateBMI(
-                                                      height: height,
-                                                      weight: weight);
-                                                });
-                                              },
-                                              backgroundColor: kbuttonColor,
-                                              child: const Icon(Icons.remove,
-                                                  size: 30),
-                                            )
-                                          ],
-                                        )
-                                      ],
-                                    )),
-                              ),
-                            ],
-                          ),
-                        ),
+                        const SizedBox(width: 10),
+                        WeightHeightSelectionWidget(
+                          label: 'weight',
+                          height: height,
+                          weight: weight,
+                          onHeightChanged: (newHeight) {},
+                          onWeightChanged: (newWeight) {
+                            setState(() {
+                              weight = newWeight;
+                              calculateBMI(); // Recalculate BMI when weight changes
+                            });
+                          },
+                        )
                       ],
                     ),
                   ),
                   const SizedBox(height: 40),
-                  ClipOval(
-                    child: Container(
-                      decoration: BoxDecoration(
-                        color: Color.fromARGB(255, 0, 0, 0),
-                        shape: BoxShape.circle, // Set the shape to a circle
-                        border: Border.all(
-                          color: kborderColor,
-                          width: 2.0,
-                        ),
-                      ),
-                      margin:
-                          const EdgeInsets.only(top: 20, left: 20, right: 20),
-                      padding: const EdgeInsets.all(
-                          50), // Add padding to control the content size
-                      child: Column(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        crossAxisAlignment: CrossAxisAlignment.center,
-                        children: [
-                          const Text(
-                            'BMI',
-                            style: TextStyle(
-                              fontSize: 20,
-                              color: Color.fromARGB(255, 255, 255, 255),
-                            ),
-                          ),
-                          Text(
-                            '${bmi.toStringAsFixed(2)}',
-                            style: TextStyle(fontSize: 50, color: koutputColor),
-                          ),
-                          Text(
-                            getStatus(bmi),
-                            style: TextStyle(color: Colors.amber, fontSize: 20),
-                          ),
-                        ],
-                      ),
-                    ),
-                  )
+                   
+                 FinalOutput(getStatus: getStatus, bmi: bmi)
                 ]),
           ),
         ));
-  }
-
-  double calculateBMI({required int height, required int weight}) {
-    return weight / (height * height) * 10000;
   }
 
   static String getStatus(double bmi) {
