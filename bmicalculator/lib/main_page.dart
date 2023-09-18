@@ -11,9 +11,9 @@ class MainPage extends StatefulWidget {
 class _MainPageState extends State<MainPage> {
   int height = 150;
   int weight = 50;
-
-  late double bmi = calculateBMI(height:height,weight:weight);
-
+  bool isFemaleClicked = false;
+  bool isMaleClicked = false;
+  late double bmi = calculateBMI(height: height, weight: weight);
 
   @override
   Widget build(BuildContext context) {
@@ -27,200 +27,263 @@ class _MainPageState extends State<MainPage> {
         body: SafeArea(
           child: Container(
             color: const Color.fromARGB(255, 0, 0, 0),
-            child: Column(children: [
-              Row(
+            child: Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                crossAxisAlignment: CrossAxisAlignment.center,
                 children: [
-                  Column(
-                    children: [
-                      Container(
-                          decoration: BoxDecoration(
-                              color: Colors.green[500],
-                              borderRadius: BorderRadius.circular(10),
-                              border:
-                                  Border.all(color: kborderColor, width: 2.0)),
-                          margin: const EdgeInsets.only(top: 20, left: 20),
-                          child: Padding(
-                            padding: const EdgeInsets.all(8.0),
-                            child: Column(children: const [
-                              Text(
-                                'Male',
-                                style: TextStyle(
-                                  fontSize: 20,
-                                  fontWeight: FontWeight.bold,
-                                ),
+                  Padding(
+                    padding: const EdgeInsets.all(8.0),
+                    child: Row(
+                      mainAxisAlignment:
+                          MainAxisAlignment.center, // Center horizontally
+                      crossAxisAlignment: CrossAxisAlignment.center,
+                      children: [
+                        Expanded(
+                          flex: 1,
+                          child: Column(
+                            children: [
+                              MouseRegion(
+                                onEnter: (_) {
+                                  setState(() {
+                                    isMaleClicked = true;
+                                  });
+                                },
+                                onExit: (event) {
+                                  setState(() {
+                                  isMaleClicked = false;
+                                    
+                                  });
+                                },
+                                child: Container(
+                                    width: double.maxFinite,
+                                    decoration: BoxDecoration(
+                                        color: isMaleClicked
+                                            ? Colors.green[500]
+                                            : Colors.yellow[600],
+                                        borderRadius: BorderRadius.circular(10),
+                                        border: Border.all(
+                                            color: kborderColor, width: 2.0)),
+                                    child: Padding(
+                                      padding: const EdgeInsets.all(8.0),
+                                      child: Column(children: const [
+                                        Text(
+                                          'Male',
+                                          style: TextStyle(
+                                            fontSize: 20,
+                                            fontWeight: FontWeight.bold,
+                                          ),
+                                        ),
+                                        Icon(
+                                          Icons.male,
+                                          size: 100,
+                                        ),
+                                      ]),
+                                    )),
                               ),
-                              Icon(
-                                Icons.male,
-                                size: 100,
+                            ],
+                          ),
+                        ),
+                        const SizedBox(width: 10),
+                        Expanded(
+                          flex: 1,
+                          child: Column(
+                            children: [
+                              GestureDetector(
+                                onTap: () {
+                                  setState(() {
+                                    isFemaleClicked = !isFemaleClicked;
+                                  });
+                                },
+                                child: Container(
+                                    width: double.maxFinite,
+                                    decoration: BoxDecoration(
+                                        color: isFemaleClicked
+                                            ? Colors.green[600]
+                                            : Colors.yellow[600],
+                                        borderRadius: BorderRadius.circular(10),
+                                        border: Border.all(
+                                            color: kborderColor, width: 2.0)),
+                                    child: Padding(
+                                      padding: const EdgeInsets.all(8.0),
+                                      child: Column(children: const [
+                                        Text(
+                                          'Female',
+                                          style: TextStyle(
+                                            fontSize: 20,
+                                            fontWeight: FontWeight.bold,
+                                          ),
+                                        ),
+                                        Icon(
+                                          Icons.female,
+                                          size: 100,
+                                        )
+                                      ]),
+                                    )),
                               ),
-                            ]),
-                          )),
-                    ],
+                            ],
+                          ),
+                        ),
+                      ],
+                    ),
                   ),
-                  const Spacer(),
-                  Column(
+                  const SizedBox(height: 20),
+                  Row(
                     children: [
-                      Container(
-                          decoration: BoxDecoration(
-                              color: Colors.yellow[600],
-                              borderRadius: BorderRadius.circular(10),
-                              border:
-                                  Border.all(color: kborderColor, width: 2.0)),
-                          margin: const EdgeInsets.only(
-                              top: 20, left: 20, right: 20),
-                          child: Padding(
-                            padding: const EdgeInsets.all(8.0),
-                            child: Column(children: const [
-                              Text(
-                                'Female',
-                                style: TextStyle(
-                                  fontSize: 20,
-                                  fontWeight: FontWeight.bold,
-                                ),
-                              ),
-                              Icon(
-                                Icons.female,
-                                size: 100,
-                              )
-                            ]),
-                          )),
-                    ],
-                  ),
-                ],
-              ),
-              const SizedBox(height: 20),
-              Row(
-                children: [
-                  Column(
-                    children: [
-                      Container(
-                          decoration: BoxDecoration(
-                              color: Color.fromARGB(255, 0, 208, 255),
-                              borderRadius: BorderRadius.circular(10),
-                              border: Border.all(
-                                color:
-                                    kborderColor, // Set the border color here
-                                width: 2.0,
-                              )),
-                          margin: const EdgeInsets.only(top: 20, left: 20),
-                          child: Padding(
-                            padding: const EdgeInsets.all(12.0),
-                            child: Column(children: [
-                              const Text(
-                                'Height',
-                                style: TextStyle(
-                                  fontSize: 20,
-                                  fontWeight: FontWeight.bold,
-                                ),
-                              ),
-                              Text('${height}', style: kHeightStyle),
-                              Row(
-                                children: [
-                                  FloatingActionButton(
-                                      onPressed: () {
-                                        setState(() {
-                                          height++;
-                                          bmi = calculateBMI(height: height, weight: weight);
-                                        });
-                                      },
-                                      backgroundColor: kbuttonColor,
-                                      child: Icon(Icons.add, size: 30)),
-                                  const SizedBox(width: 10),
-                                  FloatingActionButton(
-                                    onPressed: () {
-                                      setState(() {
-                                        if (height >100)
-                                             height--;
-                                             bmi = calculateBMI(height: height, weight: weight);
-                                      });
-                                    },
-                                    backgroundColor: kbuttonColor,
-                                    child: const Icon(Icons.remove, size: 30),
-                                  )
-                                ],
-                              )
-                            ]),
-                          )),
-                    ],
-                  ),
-                  const Spacer(),
-                  Column(
-                    children: [
-                      Container(
-                        decoration: BoxDecoration(
-                            color: const Color.fromARGB(255, 255, 143, 69),
-                            borderRadius: BorderRadius.circular(10),
-                            border:
-                                Border.all(color: kborderColor, width: 2.0)),
-                        margin:
-                            const EdgeInsets.only(top: 20, left: 20, right: 20),
-                        child: Padding(
-                            padding: const EdgeInsets.all(12.0),
-                            child: Column(
-                              children: [
-                                const Text(
-                                  'weight',
-                                  style: TextStyle(
-                                    fontSize: 20,
-                                    fontWeight: FontWeight.bold,
+                      Column(
+                        children: [
+                          Container(
+                              decoration: BoxDecoration(
+                                  color: Color.fromARGB(255, 0, 208, 255),
+                                  borderRadius: BorderRadius.circular(10),
+                                  border: Border.all(
+                                    color:
+                                        kborderColor, // Set the border color here
+                                    width: 2.0,
+                                  )),
+                              margin: const EdgeInsets.only(top: 20, left: 20),
+                              child: Padding(
+                                padding: const EdgeInsets.all(12.0),
+                                child: Column(children: [
+                                  const Text(
+                                    'Height',
+                                    style: TextStyle(
+                                      fontSize: 20,
+                                      fontWeight: FontWeight.bold,
+                                    ),
                                   ),
-                                ),
-                                Text('${weight}', style: kweightStyle),
-                                Row(
-                                  children: [
-                                    FloatingActionButton(
+                                  Text('${height}', style: kHeightStyle),
+                                  Row(
+                                    children: [
+                                      FloatingActionButton(
+                                          hoverColor: Colors.red,
+                                          onPressed: () {
+                                            setState(() {
+                                              height++;
+                                              bmi = calculateBMI(
+                                                  height: height,
+                                                  weight: weight);
+                                            });
+                                          },
+                                          backgroundColor: kbuttonColor,
+                                          child: Icon(Icons.add, size: 30)),
+                                      const SizedBox(width: 10),
+                                      FloatingActionButton(
                                         onPressed: () {
                                           setState(() {
-                                            weight++;
-                                            bmi = calculateBMI(height: height, weight: weight);
+                                            if (height > 100) height--;
+                                            bmi = calculateBMI(
+                                                height: height, weight: weight);
                                           });
                                         },
                                         backgroundColor: kbuttonColor,
-                                        child: const Icon(Icons.add, size: 30)),
-                                    const SizedBox(width: 10),
-                                    FloatingActionButton(
-                                      onPressed: () {
-                                        setState(() {
-                                          if (weight>1) weight--;
-                                          bmi = calculateBMI(height: height, weight: weight);
-                                        });
-                                      },
-                                      backgroundColor: kbuttonColor,
-                                      child: const Icon(Icons.remove, size: 30),
+                                        child:
+                                            const Icon(Icons.remove, size: 30),
+                                      )
+                                    ],
+                                  )
+                                ]),
+                              )),
+                        ],
+                      ),
+                      const Spacer(),
+                      Column(
+                        mainAxisAlignment:
+                            MainAxisAlignment.center, // Center horizontally
+                        crossAxisAlignment: CrossAxisAlignment.center,
+                        children: [
+                          Container(
+                            decoration: BoxDecoration(
+                                color: const Color.fromARGB(255, 255, 143, 69),
+                                borderRadius: BorderRadius.circular(10),
+                                border: Border.all(
+                                    color: kborderColor, width: 2.0)),
+                            margin: const EdgeInsets.only(
+                                top: 20, left: 20, right: 20),
+                            child: Padding(
+                                padding: const EdgeInsets.all(12.0),
+                                child: Column(
+                                  children: [
+                                    const Text(
+                                      'weight',
+                                      style: TextStyle(
+                                        fontSize: 20,
+                                        fontWeight: FontWeight.bold,
+                                      ),
+                                    ),
+                                    Text('${weight}', style: kweightStyle),
+                                    Row(
+                                      children: [
+                                        FloatingActionButton(
+                                            onPressed: () {
+                                              setState(() {
+                                                weight++;
+                                                bmi = calculateBMI(
+                                                    height: height,
+                                                    weight: weight);
+                                              });
+                                            },
+                                            backgroundColor: kbuttonColor,
+                                            child: const Icon(Icons.add,
+                                                size: 30)),
+                                        const SizedBox(width: 10),
+                                        FloatingActionButton(
+                                          onPressed: () {
+                                            setState(() {
+                                              if (weight > 1) weight--;
+                                              bmi = calculateBMI(
+                                                  height: height,
+                                                  weight: weight);
+                                            });
+                                          },
+                                          backgroundColor: kbuttonColor,
+                                          child: const Icon(Icons.remove,
+                                              size: 30),
+                                        )
+                                      ],
                                     )
                                   ],
-                                )
-                              ],
-                            )),
+                                )),
+                          ),
+                        ],
                       ),
                     ],
                   ),
-                ],
-              ),
-              const SizedBox(height: 40),
-              Column(
-                mainAxisAlignment: MainAxisAlignment.center,
-                mainAxisSize: MainAxisSize.max,
-                crossAxisAlignment: CrossAxisAlignment.center,
-                children:  [
-                  const Text(
-                    'BMI',
-                    style: TextStyle(
-                        fontSize: 20,
-                        color: Color.fromARGB(255, 255, 255, 255)),
+                  const SizedBox(height: 40),
+                  Column(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    mainAxisSize: MainAxisSize.max,
+                    crossAxisAlignment: CrossAxisAlignment.center,
+                    children: [
+                      const Text(
+                        'BMI',
+                        style: TextStyle(
+                            fontSize: 20,
+                            color: Color.fromARGB(255, 255, 255, 255)),
+                      ),
+                      Text(
+                        '${bmi.toStringAsFixed(2)}',
+                        style: TextStyle(fontSize: 50, color: koutputColor),
+                      ),
+                      Text(getStatus(bmi),
+                          style: TextStyle(color: Colors.amber, fontSize: 20))
+                    ],
                   ),
-                  Text(
-                    '${bmi.toStringAsFixed(2)}',
-                    style: TextStyle(fontSize: 50, color: koutputColor),
-                  )
-                ],
-              ),
-            ]),
+                ]),
           ),
         ));
   }
 
-  double calculateBMI( { required int  height, required int weight}) {
-    return weight /(height * height)* 10000;
+  double calculateBMI({required int height, required int weight}) {
+    return weight / (height * height) * 10000;
+  }
+
+  static String getStatus(double bmi) {
+    if (bmi >= 25) {
+      return 'Over Weighted';
+    } else if (bmi >= 18.5) {
+      return 'Good....!';
+    } else {
+      return 'Under Weighted';
+    }
   }
 }
