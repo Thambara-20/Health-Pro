@@ -3,8 +3,10 @@ import 'package:flutter/material.dart';
 import 'package:flutter/src/widgets/framework.dart';
 import 'package:flutter/src/widgets/placeholder.dart';
 
-class exploreComponent extends StatelessWidget {
-  const exploreComponent({super.key});
+class ExploreComponent extends StatelessWidget {
+  final String imageUrl;
+
+  ExploreComponent({required this.imageUrl});
 
   @override
   Widget build(BuildContext context) {
@@ -34,7 +36,7 @@ class exploreComponent extends StatelessWidget {
                   ),
                 ],
                 image: DecorationImage(
-                  image: AssetImage('images/photo.jpeg'),
+                  image: NetworkImage(imageUrl),
                   fit: BoxFit.cover,
                 ),
               ),

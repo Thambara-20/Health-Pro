@@ -4,7 +4,12 @@ import 'package:flutter/material.dart';
 import 'package:persistent_bottom_nav_bar/persistent_tab_view.dart';
 import 'package:page_transition/page_transition.dart';
 
-void main() {
+import 'package:firebase_core/firebase_core.dart';
+
+
+void main() async{
+   WidgetsFlutterBinding.ensureInitialized();
+  await Firebase.initializeApp();
   runApp(const MyApp());
 }
 
@@ -69,7 +74,7 @@ class MainPage extends StatelessWidget {
 
   List<Widget> _buildScreens() {
     return [
-      const Explore(),
+      Explore(),
       const HomePage(),
       const Text('Profile', style: TextStyle(color: Colors.black)),
     ];
