@@ -43,7 +43,7 @@ class MainPage extends StatelessWidget {
         decoration:
             NavBarDecoration(border: Border.all(color: Color.fromARGB(255, 255, 255, 255), width: 1.0)
           , borderRadius: BorderRadius.circular(10.0)
-        
+      
        
         ),
         popAllScreensOnTapOfSelectedTab: true,
