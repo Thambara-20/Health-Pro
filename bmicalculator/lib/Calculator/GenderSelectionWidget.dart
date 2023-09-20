@@ -24,13 +24,19 @@ class GenderSelectionWidget extends StatelessWidget {
             onTap:() {onTap();},
             child: Container(
               width: double.maxFinite,
+              
               decoration: BoxDecoration(
-                color: isSelected ? Colors.green[500] : Colors.yellow[600],
+                boxShadow: [
+                  BoxShadow(
+                    color: const Color.fromARGB(255, 0, 0, 0).withOpacity(0.5),
+                    spreadRadius: 5,
+                    blurRadius: 7,
+                    offset: const Offset(0, 3), // changes position of shadow
+                  ),
+                ],
+                color: isSelected ? Color.fromARGB(255, 3, 82, 128) : Color.fromARGB(255, 10, 190, 218),
                 borderRadius: BorderRadius.circular(10),
-                border: Border.all(
-                  color: kborderColor,
-                  width: 2.0,
-                ),
+                
               ),
               child: Padding(
                 padding: const EdgeInsets.all(8.0),

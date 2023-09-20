@@ -5,26 +5,21 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
 class Explore extends StatefulWidget {
-    @override
-  _ExploreState createState() =>
-      _ExploreState();
+  @override
+  _ExploreState createState() => _ExploreState();
 }
 
-class _ExploreState
-    extends State<Explore> {
-    final FirebaseService _firebaseService = FirebaseService();
-
+class _ExploreState extends State<Explore> {
+  final FirebaseService _firebaseService = FirebaseService();
 
   List<String> _imageUrls = [];
-
-
-
+  // List<String> _titles = ['title1', 'title2', 'title3', 'title4', 'title5'];
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        backgroundColor: Colors.amber[400],
+        backgroundColor: const Color.fromARGB(255, 0, 0, 0),
         actions: [
           IconButton(
             icon: const Icon(Icons.search),
@@ -36,31 +31,32 @@ class _ExploreState
           ),
         ],
       ),
-            body: Center(
-              child: FutureBuilder<List<String>>(
-                    future: _firebaseService.getImageUrls(), // Replace with your image folder path
-                    builder: (context, snapshot) {
-                      if (snapshot.connectionState == ConnectionState.waiting) {
+      body: Center(
+       
+        child: FutureBuilder<List<String>>(
+          future: _firebaseService
+              .getImageUrls(), // Replace with your image folder path
+          builder: (context, snapshot) {
+            if (snapshot.connectionState == ConnectionState.waiting) {
               return CircularProgressIndicator();
-                      } else if (snapshot.hasError) {
+            } else if (snapshot.hasError) {
               return Text('Error: ${snapshot.error}');
-                      } else if (!snapshot.hasData || snapshot.data!.isEmpty) {
+            } else if (!snapshot.hasData || snapshot.data!.isEmpty) {
               return Text('No images found.');
-                      } else {
+            } else {
               final List<String>? imageUrls = snapshot.data;
               return ListView.builder(
+                
                 itemCount: imageUrls!.length,
                 itemBuilder: (context, index) {
                   final imageUrl = imageUrls[index];
-                  return ExploreComponent(imageUrl: imageUrl);
-                   
-                  
+                  return ExploreComponent(imageUrl: imageUrl, title: 'title');
                 },
               );
-                      }
-                    },
-                  ),
-            ),
+            }
+          },
+        ),
+      ),
     );
   }
 }
@@ -82,15 +78,10 @@ class _ExploreState
 //   }
 // }
 
-
-
-
 // import 'package:flutter/material.dart';
 // import 'package:firebase_storage/firebase_storage.dart';
 // import 'package:firebase_core/firebase_core.dart';
 // import 'package:get/get.dart';
-
-
 
 class ImageListFromFirebaseStorage extends StatefulWidget {
   @override
@@ -109,7 +100,8 @@ class _ImageListFromFirebaseStorageState
         title: Text('Firebase Storage Images'),
       ),
       body: FutureBuilder<List<String>>(
-        future: _firebaseService.getImageUrls(), // Replace with your image folder path
+        future: _firebaseService
+            .getImageUrls(), // Replace with your image folder path
         builder: (context, snapshot) {
           if (snapshot.connectionState == ConnectionState.waiting) {
             return CircularProgressIndicator();
@@ -135,7 +127,6 @@ class _ImageListFromFirebaseStorageState
   }
 }
 
-
 class FirebaseService {
   final FirebaseStorage _storage = FirebaseStorage.instance;
 
@@ -148,8 +139,6 @@ class FirebaseService {
         final String downloadURL = await ref.getDownloadURL();
         imageUrls.add(downloadURL);
       }
-
-      
 
       return imageUrls;
     } catch (e) {

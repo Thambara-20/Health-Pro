@@ -1,14 +1,13 @@
 import 'package:bmicalculator/explore/explore.dart';
-import 'package:bmicalculator/main_page.dart';
+import 'package:bmicalculator/Calculator/Calculatormain.dart';
 import 'package:flutter/material.dart';
 import 'package:persistent_bottom_nav_bar/persistent_tab_view.dart';
 import 'package:page_transition/page_transition.dart';
-
+import 'Home/Homepage.dart';
 import 'package:firebase_core/firebase_core.dart';
 
-
-void main() async{
-   WidgetsFlutterBinding.ensureInitialized();
+void main() async {
+  WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp();
   runApp(const MyApp());
 }
@@ -24,6 +23,13 @@ class MyApp extends StatelessWidget {
         primarySwatch: Colors.blue,
       ),
       home: const MainPage(),
+      initialRoute: '/',
+      onGenerateRoute: (settings) {
+        if (settings.name == '/bmi') {
+          return MaterialPageRoute(builder: (context) => Calculator());
+        }
+        // Handle other routes here if needed
+      },
     );
   }
 }
@@ -33,40 +39,35 @@ class MainPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return  PersistentTabView(
-        context,
-        controller: _controller,
-        screens: _buildScreens(),
-        items: _navBarsItems(),
-        confineInSafeArea: true,
-        backgroundColor: Color.fromARGB(255, 255, 196, 0),
-        handleAndroidBackButtonPress: true,
-        resizeToAvoidBottomInset: true,
-        stateManagement: true,
-        hideNavigationBarWhenKeyboardShows: true,
-       
-        decoration:
-            NavBarDecoration(border: Border.all(color: Color.fromARGB(255, 255, 255, 255), width: 1.0)
-          , borderRadius: BorderRadius.circular(10.0)
-      
-       
-        ),
-        popAllScreensOnTapOfSelectedTab: true,
-        popActionScreens: PopActionScreensType.all,
-        itemAnimationProperties: const ItemAnimationProperties(
-          duration: Duration(milliseconds: 500),
-          curve: Curves.ease,
-        ),
-        screenTransitionAnimation: const ScreenTransitionAnimation(
-          animateTabTransition: true,
-          curve: Curves.ease,
-          duration: Duration(milliseconds: 500),
-         // Use the custom transition here
-        ),
-        navBarStyle: NavBarStyle.style17,
-        
-      );
-    
+    return PersistentTabView(
+      context,
+      controller: _controller,
+      screens: _buildScreens(),
+      items: _navBarsItems(),
+      confineInSafeArea: true,
+      backgroundColor: Color.fromARGB(255, 255, 196, 0),
+      handleAndroidBackButtonPress: true,
+      resizeToAvoidBottomInset: true,
+      stateManagement: true,
+      hideNavigationBarWhenKeyboardShows: true,
+      decoration: NavBarDecoration(
+          border:
+              Border.all(color: Color.fromARGB(255, 255, 255, 255), width: 1.0),
+          borderRadius: BorderRadius.circular(10.0)),
+      popAllScreensOnTapOfSelectedTab: true,
+      popActionScreens: PopActionScreensType.all,
+      itemAnimationProperties: const ItemAnimationProperties(
+        duration: Duration(milliseconds: 500),
+        curve: Curves.ease,
+      ),
+      screenTransitionAnimation: const ScreenTransitionAnimation(
+        animateTabTransition: true,
+        curve: Curves.ease,
+        duration: Duration(milliseconds: 500),
+        // Use the custom transition here
+      ),
+      navBarStyle: NavBarStyle.style9,
+    );
   }
 
   static final PersistentTabController _controller =
@@ -74,8 +75,9 @@ class MainPage extends StatelessWidget {
 
   List<Widget> _buildScreens() {
     return [
+      HomePage(),
       Explore(),
-      const HomePage(),
+      const Calculator(),
       const Text('Profile', style: TextStyle(color: Colors.black)),
     ];
   }
@@ -83,14 +85,22 @@ class MainPage extends StatelessWidget {
   List<PersistentBottomNavBarItem> _navBarsItems() {
     return [
       PersistentBottomNavBarItem(
+        icon: Icon(
+          Icons.home,
+        ),
+        title: 'Home',
+        activeColorPrimary: Color.fromARGB(255, 0, 0, 0),
+        inactiveColorPrimary: Colors.grey,
+      ),
+      PersistentBottomNavBarItem(
         icon: Icon(Icons.explore),
         title: 'Explore',
         activeColorPrimary: Color.fromARGB(255, 0, 0, 0),
         inactiveColorPrimary: Colors.grey,
       ),
       PersistentBottomNavBarItem(
-        icon: Icon(Icons.home, color: Colors.amber[400],),
-        title: 'Home',
+        icon: Icon(Icons.calculate),
+        title: 'Calculator',
         activeColorPrimary: Color.fromARGB(255, 0, 0, 0),
         inactiveColorPrimary: Colors.grey,
       ),
@@ -103,13 +113,12 @@ class MainPage extends StatelessWidget {
     ];
   }
 
-
   PageTransition buildCustomTransition(Widget page) {
     return PageTransition(
       type: PageTransitionType.fade, // You can choose different animation types
       child: page,
-      duration: const Duration(milliseconds: 500), // Adjust the duration as needed
+      duration:
+          const Duration(milliseconds: 500), // Adjust the duration as needed
     );
   }
 }
-

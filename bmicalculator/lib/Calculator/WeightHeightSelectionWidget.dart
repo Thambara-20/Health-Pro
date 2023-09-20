@@ -35,12 +35,20 @@ class _WeightHeightSelectionWidgetState
           Container(
             decoration: BoxDecoration(
               color: widget.label == 'Height'
-                  ? Color.fromARGB(255, 0, 208, 255)
-                  : const Color.fromARGB(255, 255, 143, 69),
+                  ? Color.fromARGB(255, 70, 73, 255)
+                  : Color.fromARGB(255, 70, 73, 255),
               borderRadius: BorderRadius.circular(10),
+              boxShadow: [
+                BoxShadow(
+                  color: const Color.fromARGB(255, 0, 0, 0).withOpacity(0.5),
+                  spreadRadius: 5,
+                  blurRadius: 7,
+                  offset: const Offset(0, 3), // changes position of shadow
+                ),
+              ],
               border: Border.all(
                 color: kborderColor,
-                width: 2.0,
+                width: 1.0,
               ),
             ),
             child: Padding(
