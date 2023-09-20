@@ -18,3 +18,6 @@ const kHeightStyle = TextStyle(
 const kborderColor = Colors.white;
 const kbuttonColor = Colors.black;
 const koutputColor = Color.fromARGB(255, 176, 0, 0);
+
+const knavbarActive = Color.fromARGB(255, 0, 183, 255);
+const knavbarinActive = Color.fromARGB(255, 0, 50, 248);
