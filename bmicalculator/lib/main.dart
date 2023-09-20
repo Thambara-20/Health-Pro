@@ -103,6 +103,7 @@ class MainPage extends StatelessWidget {
     ];
   }
 
+
   PageTransition buildCustomTransition(Widget page) {
     return PageTransition(
       type: PageTransitionType.fade, // You can choose different animation types
