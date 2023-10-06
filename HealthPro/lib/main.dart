@@ -154,12 +154,10 @@ class MyApp extends StatelessWidget {
       ),
       initialRoute: '/',
       routes: {
-        '/': (context) =>
-            const MainPage(), // This is the route for the main page
+        '/': (context) =>const MainPage(), // This is the route for the main page
         '/bmi': (context) => Calculator(),
         '/explore': (context) => Explore(),
-        '/profile': (context) =>
-            Text('Profile', style: TextStyle(color: Colors.black)),
+        '/profile': (context) => Text('Profile', style: TextStyle(color: Colors.black)),
         // Add more routes as needed
       },
     );

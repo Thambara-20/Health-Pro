@@ -13,7 +13,7 @@ class _ExploreState extends State<Explore> {
   final FirebaseService _firebaseService = FirebaseService();
 
   List<String> _imageUrls = [];
-  // List<String> _titles = ['title1', 'title2', 'title3', 'title4', 'title5'];
+   List<String> titles = ['Yoga',"Pilates", "Tai Chi", "Qigong",'Yoga',"Pilates", "Tai Chi",];
 
   @override
   Widget build(BuildContext context) {
@@ -46,11 +46,10 @@ class _ExploreState extends State<Explore> {
             } else {
               final List<String>? imageUrls = snapshot.data;
               return ListView.builder(
-                
                 itemCount: imageUrls!.length,
                 itemBuilder: (context, index) {
                   final imageUrl = imageUrls[index];
-                  return ExploreComponent(imageUrl: imageUrl, title: 'title');
+                  return ExploreComponent(imageUrl: imageUrl, title: titles[index]);
                 },
               );
             }
@@ -83,49 +82,49 @@ class _ExploreState extends State<Explore> {
 // import 'package:firebase_core/firebase_core.dart';
 // import 'package:get/get.dart';
 
-class ImageListFromFirebaseStorage extends StatefulWidget {
-  @override
-  _ImageListFromFirebaseStorageState createState() =>
-      _ImageListFromFirebaseStorageState();
-}
+// class ImageListFromFirebaseStorage extends StatefulWidget {
+//   @override
+//   _ImageListFromFirebaseStorageState createState() =>
+//       _ImageListFromFirebaseStorageState();
+// }
 
-class _ImageListFromFirebaseStorageState
-    extends State<ImageListFromFirebaseStorage> {
-  final FirebaseService _firebaseService = FirebaseService();
+// class _ImageListFromFirebaseStorageState
+//     extends State<ImageListFromFirebaseStorage> {
+//   final FirebaseService _firebaseService = FirebaseService();
 
-  @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        title: Text('Firebase Storage Images'),
-      ),
-      body: FutureBuilder<List<String>>(
-        future: _firebaseService
-            .getImageUrls(), // Replace with your image folder path
-        builder: (context, snapshot) {
-          if (snapshot.connectionState == ConnectionState.waiting) {
-            return CircularProgressIndicator();
-          } else if (snapshot.hasError) {
-            return Text('Error: ${snapshot.error}');
-          } else if (!snapshot.hasData || snapshot.data!.isEmpty) {
-            return Text('No images found.');
-          } else {
-            final List<String>? imageUrls = snapshot.data;
-            return ListView.builder(
-              itemCount: imageUrls!.length,
-              itemBuilder: (context, index) {
-                final imageUrl = imageUrls[index];
-                return ListTile(
-                  title: Image.network(imageUrl),
-                );
-              },
-            );
-          }
-        },
-      ),
-    );
-  }
-}
+//   @override
+//   Widget build(BuildContext context) {
+//     return Scaffold(
+//       appBar: AppBar(
+//         title: Text('Firebase Storage Images'),
+//       ),
+//       body: FutureBuilder<List<String>>(
+//         future: _firebaseService
+//             .getImageUrls(), // Replace with your image folder path
+//         builder: (context, snapshot) {
+//           if (snapshot.connectionState == ConnectionState.waiting) {
+//             return CircularProgressIndicator();
+//           } else if (snapshot.hasError) {
+//             return Text('Error: ${snapshot.error}');
+//           } else if (!snapshot.hasData || snapshot.data!.isEmpty) {
+//             return Text('No images found.');
+//           } else {
+//             final List<String>? imageUrls = snapshot.data;
+//             return ListView.builder(
+//               itemCount: imageUrls!.length,
+//               itemBuilder: (context, index) {
+//                 final imageUrl = imageUrls[index];
+//                 return ListTile(
+//                   title: Image.network(imageUrl),
+//                 );
+//               },
+//             );
+//           }
+//         },
+//       ),
+//     );
+//   }
+// }
 
 class FirebaseService {
   final FirebaseStorage _storage = FirebaseStorage.instance;
